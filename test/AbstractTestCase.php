@@ -40,7 +40,7 @@ abstract class AbstractTestCase extends AbstractControllerTestCase implements Lo
     function setUp()
     {
         parent::setUp();
-        $this->setApplicationConfig(include $this->appConfigPath);
+        $this->setApplicationConfig($this->getAppConfig());
         if (!$this->getLogger()) {
             $this->setLogger($this->getApplicationServiceLocator()->get('logger'));
         }
@@ -49,6 +49,8 @@ abstract class AbstractTestCase extends AbstractControllerTestCase implements Lo
             $this->getLogger()->notice('============ [' . get_class($this) . '::' . $this->getName() . '] ===========');
         }
     }
+
+    abstract function getAppConfig();
 
     function tearDown()
     {
