@@ -21,7 +21,6 @@ use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractRestfulController as Base;
-use Zend\Mvc\Exception\DomainException;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceManager;
 use Zend\View\Model\JsonModel;
@@ -111,7 +110,7 @@ abstract class AbstractRestfulController extends Base implements LoggerAwareInte
             // Retry /index/id route if current route of /id is invalid
             $routeMatch = $event->getRouteMatch();
             if (!$routeMatch) {
-                throw new DomainException('Missing route matches; unsure how to retrieve action');
+                throw new AppException('Missing route matches; unsure how to retrieve action');
             }
             /** @var \Zend\Http\PhpEnvironment\Request $request */
             $request = $event->getRequest();
@@ -128,9 +127,6 @@ abstract class AbstractRestfulController extends Base implements LoggerAwareInte
                     }
                 }
             }
-            if (extension_loaded('newrelic')) {
-                newrelic_name_transaction($request->getUri()->getPath());
-            }
 
             return parent::onDispatch($event);
         } catch (\Exception $exception) {
@@ -142,7 +138,7 @@ abstract class AbstractRestfulController extends Base implements LoggerAwareInte
 
             switch (true) {
                 case $exception instanceof UnAuthenticatedException:
-                    $message = $this->t('Please login first');
+                    $message = $this->t('Please login first.');
                     break;
                 case $exception instanceof AbstractWithParamException:
                     $message = vsprintf($this->t($exception->getMessage()), $exception->getMessageParams());
@@ -779,7 +775,7 @@ abstract class AbstractRestfulController extends Base implements LoggerAwareInte
      */
     protected function getMeasureService()
     {
-        $Measure = $this->serviceLocator->get(Measure::class)->init();
+        $Measure = $this->serviceLocator->get('Measure')->init();
         $measureFields = $this->getTableGateway()->getMeasureField();
 
         if (isset($measureFields['lengthFields']) && !empty($measureFields['lengthFields'])) {
