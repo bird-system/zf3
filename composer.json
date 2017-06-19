@@ -1,0 +1,24 @@
+{
+  "name": "birdsystem/bszf3",
+  "require": {
+    "php": ">=5.6",
+    "zendframework/zendframework": "^3",
+    "crisu83/php-conversion": "dev-master",
+    "phpoffice/phpexcel": "@stable",
+    "mattketmo/camel": "@stable"
+  },
+  "require-dev": {
+    "enlitepro/enlite-monolog": "@stable",
+    "phpunit/phpunit": "~5"
+  },
+  "autoload": {
+    "psr-4": {
+      "BS\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "BS\\Test\\": "test/"
+    }
+  }
+}
