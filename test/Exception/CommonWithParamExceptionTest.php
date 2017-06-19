@@ -1,6 +1,6 @@
 <?php
 
-namespace BS\Test\Exception;
+namespace BS\Tests\Exception;
 
 use BS\Exception\CommonWithParamException;
 use PHPUnit\Framework\TestCase;

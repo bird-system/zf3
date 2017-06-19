@@ -10,8 +10,6 @@ namespace BS\Tests;
 use BS\ServiceLocatorAwareInterface;
 use BS\Traits\LoggerAwareTrait;
 use BS\Traits\ServiceLocatorAwareTrait;
-use Faker\Factory as FackerFactory;
-use Faker\Generator;
 use Psr\Log\LoggerAwareInterface;
 use Zend\Http\Request;
 use Zend\Json\Json;
@@ -26,12 +24,6 @@ use Zend\Test\PHPUnit\Controller\AbstractControllerTestCase;
 abstract class AbstractTestCase extends AbstractControllerTestCase implements LoggerAwareInterface, ServiceLocatorAwareInterface
 {
     use LoggerAwareTrait, ServiceLocatorAwareTrait;
-
-    /**
-     * @see https://github.com/fzaninotto/Faker
-     * @var Generator $faker
-     */
-    private static $faker;
 
     protected $traceError = false;
 
@@ -56,18 +48,6 @@ abstract class AbstractTestCase extends AbstractControllerTestCase implements Lo
     {
         parent::tearDown();
         $this->reset();
-    }
-
-    /**
-     * @return Generator
-     */
-    public function getFaker()
-    {
-        if (!self::$faker) {
-            self::$faker = FackerFactory::create('en_GB');
-        }
-
-        return self::$faker;
     }
 
     /**
