@@ -8,7 +8,9 @@
     "mattketmo/camel": "@stable"
   },
   "require-dev": {
+    "fzaninotto/Faker": "dev-master",
     "enlitepro/enlite-monolog": "@stable",
+    "bramus/monolog-colored-line-formatter": "~2",
     "phpunit/phpunit": "~5"
   },
   "autoload": {
