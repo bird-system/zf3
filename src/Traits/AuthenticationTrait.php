@@ -72,7 +72,7 @@ trait AuthenticationTrait
             self::$moduleName = $moduleNamespace;
             $headers = $this->getRequest()->getHeaders();
 
-            $AuthenticationServiceFactory = $this->serviceLocator->get(AuthenticationServiceFactory::class);
+            $AuthenticationServiceFactory = $this->serviceLocator->get('AuthServiceFactory');
             $this->serviceLocator->setService('AuthService', $AuthenticationServiceFactory->create($moduleNamespace));
 
             // ZF2 doesn't pass all headers from server, so we need to manually add them if existed

@@ -8,7 +8,7 @@ use BS\I18n\Translator\TranslatorAwareTrait;
 use BS\ServiceLocatorAwareInterface;
 use BS\Traits\LoggerAwareTrait;
 use BS\Traits\ServiceLocatorAwareTrait;
-use Psr\Log\LoggerAwareInterface;
+use Zend\Log\LoggerAwareInterface;
 use Zend\Mvc\Controller\AbstractActionController as Base;
 use Zend\Mvc\MvcEvent;
 

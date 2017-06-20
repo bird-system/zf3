@@ -9,16 +9,12 @@ namespace BS\Authentication\Adapter;
 
 use BS\Db\Model\AbstractModel;
 use Zend\Authentication\Adapter\AdapterInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 
 
 /**
  * Class DbTable
- *
- * @package Birdego\Authentication\Adapter
- * @codeCoverageIgnore
- * @method $this setCredential($credential)
- * @method $this setIdentity($identity)
+ * @package BS\Authentication\Adapter
  */
 abstract class DbTable implements AdapterInterface
 {
@@ -33,7 +29,7 @@ abstract class DbTable implements AdapterInterface
     /**
      * DbTable constructor.
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ContainerInterface $serviceLocator
      */
     public function __construct($serviceLocator)
     {

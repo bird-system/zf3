@@ -4,7 +4,7 @@ namespace BS\Traits;
 
 use BS\ServiceLocatorAwareInterface;
 use Interop\Container\ContainerInterface;
-use Zend\I18n\Translator\TranslatorAwareInterface;
+use BS\I18n\Translator\TranslatorAwareInterface;
 use Zend\I18n\Translator\TranslatorInterface;
 use Zend\Log\LoggerAwareInterface;
 
@@ -18,11 +18,15 @@ trait InjectServiceFromAwareInterfaceTrait
             }
 
             if ($object instanceof TranslatorAwareInterface) {
-                $object->setTranslator($container->get(TranslatorInterface::class));
+                if ($container->has('translator')) {
+                    $object->setTranslator($container->get('translator'));
+                }
             }
 
             if ($object instanceof LoggerAwareInterface) {
-                $object->setLogger($container->get(LoggerAwareInterface::class));
+                if ($container->has(LoggerAwareInterface::class)) {
+                    $object->setLogger($container->get(LoggerAwareInterface::class));
+                }
             }
 
             if (method_exists($object, 'init')) {
