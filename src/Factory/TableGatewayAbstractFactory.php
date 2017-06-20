@@ -13,7 +13,7 @@ class TableGatewayAbstractFactory implements AbstractFactoryInterface
 
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $instance = new $requestedName();
+        $instance = new $requestedName($container->get('db'));
 
         $this->checkAwareInterface($instance, $container);
 
