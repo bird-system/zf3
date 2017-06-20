@@ -13,7 +13,7 @@ use BS\ServiceLocatorAwareInterface;
 use BS\Traits\LoggerAwareTrait;
 use BS\Traits\ServiceLocatorAwareTrait;
 use BS\Utility\Measure;
-use Zend\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareInterface;
 use Zend\Db\Sql\Predicate\Expression;
 use Zend\Db\Sql\Select;
 use Zend\EventManager\Event;
