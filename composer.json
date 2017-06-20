@@ -5,22 +5,13 @@
     "zendframework/zendframework": "^3",
     "crisu83/php-conversion": "dev-master",
     "phpoffice/phpexcel": "@stable",
-    "mattketmo/camel": "@stable"
-  },
-  "require-dev": {
-    "fzaninotto/Faker": "dev-master",
-    "enlitepro/enlite-monolog": "@stable",
+    "mattketmo/camel": "@stable",
     "bramus/monolog-colored-line-formatter": "~2",
-    "phpunit/phpunit": "~5"
+    "enlitepro/enlite-monolog": "@stable"
   },
   "autoload": {
     "psr-4": {
       "BS\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "BS\\Tests\\": "test/"
     }
   }
 }
