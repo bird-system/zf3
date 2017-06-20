@@ -34,7 +34,6 @@ abstract class Module implements ConfigProviderInterface, ServiceProviderInterfa
 
         $this->initSession($event);
         $this->initLocale($event);
-        $this->initLogger($event);
     }
 
     protected function initSession(MvcEvent $event)
