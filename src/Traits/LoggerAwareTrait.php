@@ -37,7 +37,7 @@ trait LoggerAwareTrait
     public function log($message, $extra = [])
     {
         if (!null == $this->getLogger()) {
-            $this->getLogger()->info($message, $extra);
+            $this->getLogger()->info($message, is_array($extra) ? $extra : []);
         }
 
         return $this;

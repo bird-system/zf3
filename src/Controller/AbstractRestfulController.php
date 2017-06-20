@@ -77,26 +77,11 @@ abstract class AbstractRestfulController extends Base implements LoggerAwareInte
      */
     protected $tableGatewayInstance;
 
-    public function __construct()
-    {
-        $this->getEventManager()->attach(self::EVENT_CREATE_PRE, [$this, 'createPre']);
-        $this->getEventManager()->attach(self::EVENT_CREATE_POST, [$this, 'createPost']);
-        $this->getEventManager()->attach(self::EVENT_READ_PRE, [$this, 'readPre']);
-        $this->getEventManager()->attach(self::EVENT_READ_POST, [$this, 'readPost']);
-        $this->getEventManager()->attach(self::EVENT_UPDATE_PRE, [$this, 'updatePre']);
-        $this->getEventManager()->attach(self::EVENT_UPDATE_POST, [$this, 'updatePost']);
-        $this->getEventManager()->attach(self::EVENT_DELETE_PRE, [$this, 'deletePre']);
-        $this->getEventManager()->attach(self::EVENT_DELETE_POST, [$this, 'deletePost']);
-        $this->getEventManager()->attach(self::EVENT_GET_PRE, [$this, 'getPre']);
-        $this->getEventManager()->attach(self::EVENT_GET_POST, [$this, 'getPost']);
-        $this->getEventManager()->attach(self::EVENT_INDEX_PRE, [$this, 'indexPre']);
-        $this->getEventManager()->attach(self::EVENT_INDEX_POST, [$this, 'indexPost']);
-        $this->getEventManager()->attach(self::EVENT_AUTH_BEFORE, [$this, 'beforeAuth']);
-        $this->getEventManager()->attach(self::EVENT_AUTH_AFTER, [$this, 'afterAuth']);
-    }
-
     public function onDispatch(MvcEvent $event)
     {
+        $this->getEventManager()->attach(self::EVENT_AUTH_BEFORE, [$this, 'beforeAuth']);
+        $this->getEventManager()->attach(self::EVENT_AUTH_AFTER, [$this, 'afterAuth']);
+
         try {
             $this->viewModel = new JsonModel();
             $this->viewModel->setTerminal(true);
@@ -182,6 +167,9 @@ abstract class AbstractRestfulController extends Base implements LoggerAwareInte
 
     public function get($id)
     {
+        $this->getEventManager()->attach(self::EVENT_GET_PRE, [$this, 'getPre']);
+        $this->getEventManager()->attach(self::EVENT_GET_POST, [$this, 'getPost']);
+
         $this->getEventManager()->trigger(self::EVENT_GET_PRE, $this, $this->params()->fromQuery());
         $this->indexAction($id);
         $this->getEventManager()->trigger(self::EVENT_GET_POST, $this, $this->params()->fromQuery());
@@ -191,6 +179,9 @@ abstract class AbstractRestfulController extends Base implements LoggerAwareInte
 
     public function getList()
     {
+        $this->getEventManager()->attach(self::EVENT_INDEX_PRE, [$this, 'indexPre']);
+        $this->getEventManager()->attach(self::EVENT_INDEX_POST, [$this, 'indexPost']);
+
         $this->getEventManager()->trigger(self::EVENT_INDEX_PRE, $this, $this->params()->fromQuery());
         $this->indexAction();
         $this->getEventManager()->trigger(self::EVENT_INDEX_POST, $this, $this->params()->fromQuery());
@@ -200,6 +191,9 @@ abstract class AbstractRestfulController extends Base implements LoggerAwareInte
 
     public function indexAction($id = false)
     {
+        $this->getEventManager()->attach(self::EVENT_READ_PRE, [$this, 'readPre']);
+        $this->getEventManager()->attach(self::EVENT_READ_POST, [$this, 'readPost']);
+
         $data = $this->getEventManager()->trigger(self::EVENT_READ_PRE, $this, $this->params()->fromQuery())->last();
 
         $tableGateway = $this->getTableGateway();
@@ -247,6 +241,11 @@ abstract class AbstractRestfulController extends Base implements LoggerAwareInte
 
     public function postAction($data)
     {
+        $this->getEventManager()->attach(self::EVENT_CREATE_PRE, [$this, 'createPre']);
+        $this->getEventManager()->attach(self::EVENT_CREATE_POST, [$this, 'createPost']);
+        $this->getEventManager()->attach(self::EVENT_UPDATE_PRE, [$this, 'updatePre']);
+        $this->getEventManager()->attach(self::EVENT_UPDATE_POST, [$this, 'updatePost']);
+
         /**
          * @var \BS\Db\Model\AbstractModel $Model
          */
@@ -281,6 +280,9 @@ abstract class AbstractRestfulController extends Base implements LoggerAwareInte
 
     public function deleteAction($id = false)
     {
+        $this->getEventManager()->attach(self::EVENT_DELETE_PRE, [$this, 'deletePre']);
+        $this->getEventManager()->attach(self::EVENT_DELETE_POST, [$this, 'deletePost']);
+
         if (false == $id) {
             $id = $this->getParam('id');
         }
